@@ -40,7 +40,7 @@ class Connection:
                 modtime = int(fi[1]["modify"])
                 self.logger.info(f"mod time for {filename} @ {modtime}")
                 return modtime
-        return FileNotFoundError
+        raise FileNotFoundError
 
     def fetch_files(self, files=None):
         """Downloads files to instances storage directory.
