@@ -83,7 +83,7 @@ class Connection:
         archive_path = Path(self.store.name, archive)
         self.logger.info(f"extracting {archive_path}")
         with zipfile.ZipFile(archive_path) as zifi:
-            zifi.extractall()
+            zifi.extractall(path=self.store.name)
         if delete:
             self.logger.info(f"removing {archive_path}")
             remove(archive_path)
