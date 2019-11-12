@@ -81,11 +81,11 @@ class Connection:
         """
         delete = kwargs.pop("delete", False)
         archive_path = Path(self.store.name, archive)
-        self.logging.info(f"extracting {archive_path}")
+        self.logger.info(f"extracting {archive_path}")
         with zipfile.ZipFile(archive_path) as zifi:
             zifi.extractall()
         if delete:
-            self.logging.info(f"removing {archive_path}")
+            self.logger.info(f"removing {archive_path}")
             remove(archive_path)
 
     def move_generator(self, destination_dir):
