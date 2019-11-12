@@ -1,6 +1,7 @@
 import logging
+import zipfile
 
-from os import listdir
+from os import listdir, remove
 from pathlib import Path
 from shutil import move
 from tempfile import TemporaryDirectory
@@ -64,6 +65,28 @@ class Connection:
                 self.logger.warning(f"{fileitem} has failed")
                 fails.append(fileitem)
         return fails
+
+    def extract_archive(self, archive, *args, **kwargs):
+        """Extracts an archive in the store.
+
+        Parameters
+        ----------
+        archive: str
+            Archive name to extract.
+
+        Optional
+        --------
+        delete: bool
+            Removes archive when True.
+        """
+        delete = kwargs.pop("delete", False)
+        archive_path = Path(self.store.name, archive)
+        self.logging.info(f"extracting {archive_path}")
+        with zipfile.ZipFile(archive_path) as zifi:
+            zifi.extractall()
+        if delete:
+            self.logging.info(f"removing {archive_path}")
+            remove(archive_path)
 
     def move_generator(self, destination_dir):
         """Moves contents of instance store to a destination.
