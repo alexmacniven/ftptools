@@ -82,7 +82,7 @@ class Connection:
         delete = kwargs.pop("delete", False)
         archive_path = Path(self.store.name, archive)
         self.logger.info(f"extracting {archive_path}")
-        with zipfile.ZipFile(archive_path) as zifi:
+        with zipfile.ZipFile(str(archive_path)) as zifi:
             zifi.extractall(path=self.store.name)
         if delete:
             self.logger.info(f"removing {archive_path}")
